@@ -1,0 +1,38 @@
+============================================================
+ANALYSIS SUMMARY: CASE1_Z500MM
+Axial Position: z = 500 mm
+============================================================
+
+EQUIVALENCE RATIO
+----------------------------------------
+Mean φ               : 49.111
+Std Dev φ            : 91.262
+Min φ                : 0.000
+Max φ                : 352.020
+
+STRATIFICATION
+----------------------------------------
+Stratification Index : 1.858
+Mean |dφ/dr|         : 4750.4 m⁻¹
+RMS gradient         : 9245.3 m⁻¹
+Max gradient         : 28704.7 m⁻¹
+  at radius          : 6.92 mm
+
+EFFICIENCY
+----------------------------------------
+Mean η_local         : 99.2 %
+Max η_local          : 100.0 %
+Min η_local          : 98.3 %
+
+TEMPERATURE
+----------------------------------------
+Max Temperature      : 2249.3 K
+Min Temperature      : 352.1 K
+Mean Temperature     : 1890.3 K
+
+FLAME CHARACTERISTICS
+----------------------------------------
+Flame location (T_max)       : 66.50 mm
+Flame location (max dT/dr)   : 31.94 mm
+
+============================================================
