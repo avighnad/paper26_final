@@ -94,11 +94,28 @@ valid_data = df_results.loc[:SI_min_idx].copy()
 
 if len(valid_data) < len(df_results):
     removed = len(df_results) - len(valid_data)
-    print(f"   ⚠️  Removing {removed} point(s) after z={valid_data['z_mm'].max():.0f}mm (SI increases)")
+    print(f"   Removing {removed} point(s) after z={valid_data['z_mm'].max():.0f}mm (since SI increases)")
     print(f"   Analysis uses: z={valid_data['z_mm'].min():.0f}-{valid_data['z_mm'].max():.0f}mm\n")
     df_results = valid_data
 else:
-    print(f"   ✓ All data points show monotonic SI decrease\n")
+    print(f"   All data points show monotonic SI decrease\n")
+
+df_results['dSI_dz'] = np.gradient(df_results['SI'], df_results['z_mm'])
+df_results['dTKE_dz'] = np.gradient(df_results['TKE'], df_results['z_mm'])
+
+# Near-field: turbulence production
+df_results['mixing_regime'] = np.where(
+    df_results['dTKE_dz'] > 0, 'Near-field', 'Far-field'
+)
+
+# Identify transition location (peak TKE)
+transition_idx = df_results['TKE'].idxmax()
+z_transition = df_results.loc[transition_idx, 'z_mm']
+
+print("\nMixing Regime Detection:")
+print("="*80)
+print(f"   Near-field → Far-field transition at z ≈ {z_transition:.0f} mm")
+print("="*80)
 
 # key design metrics 
 # Find mixing length (where SI drops to target) by interpolation
@@ -136,6 +153,7 @@ except Exception as e:
     fit_quality = False
     k = None
 
+
 print(f"Mixing Performance Data (Analysis Range: z={df_results['z_mm'].min():.0f}-{df_results['z_mm'].max():.0f}mm)")
 print(f"   SI decay from {df_results.iloc[0]['SI']:.2f} → {df_results.iloc[-1]['SI']:.2f}")
 if L_mix:
@@ -143,6 +161,62 @@ if L_mix:
 if fit_quality:
     print(f"   Decay constant k = {k:.4f} mm⁻¹")
     print(f"   Characteristic length = {1/k:.1f} mm")
+
+
+# ============================================================
+# Piecewise exponential decay: near-field and far-field
+# ============================================================
+
+near_df = df_results.loc[:transition_idx].copy()
+far_df  = df_results.loc[transition_idx:].copy()
+
+# --- Near-field fit using first 2 points only ---
+if len(near_df) >= 2:
+    try:
+        # Take first two points
+        z_near = near_df['z_mm'].iloc[:2].values
+        SI_near = near_df['SI'].iloc[:2].values
+        
+        SI0_near = SI_near[0]
+        SIinf_near = SI_near[1]  # last point as asymptote
+        
+        # Define simple 2-point exponential decay
+        def exp_decay_2pt(z, k):
+            return SIinf_near + (SI0_near - SIinf_near) * np.exp(-k * (z - z_near[0]))
+        
+        popt, _ = curve_fit(exp_decay_2pt, z_near, SI_near, p0=[0.02])
+        k_near = popt[0]
+    except Exception as e:
+        print(f"⚠️ Near-field 2-point fit failed: {e}")
+else:
+    print("⚠️ Near-field: need at least 2 points")
+    k_near = None
+
+
+# --- Far-field fit (shifted origin) ---
+k_far = None
+try:
+    z_far_shifted = far_df['z_mm'] - far_df['z_mm'].iloc[0]
+
+    params_far, _ = curve_fit(
+        exp_decay,
+        z_far_shifted,
+        far_df['SI'],
+        p0=[far_df['SI'].iloc[0], 0.005, far_df['SI'].iloc[-1]],
+        maxfev=10000
+    )
+    SI0_far, k_far, SIinf_far = params_far
+except Exception as e:
+    print(f"⚠️ Far-field fit failed: {e}")
+
+print("\nPiecewise Mixing Decay Constants")
+print("="*80)
+if k_near:
+    print(f"Near-field: k = {k_near:.4f} mm⁻¹, ℓ = {1/k_near:.1f} mm")
+if k_far:
+    print(f"Far-field : k = {k_far:.4f} mm⁻¹, ℓ = {1/k_far:.1f} mm")
+if k_near and k_far:
+    print(f"k_near / k_far ≈ {k_near/k_far:.1f}")
 
 # turbulent mixing efficiency calculation 
 
@@ -165,6 +239,33 @@ fig, ((ax1, ax2), (ax3, ax4)) = plt.subplots(2, 2, figsize=(14, 10))
 
 # Plot 1: SI Decay
 ax1.plot(df_results['z_mm'], df_results['SI'], 'ro-', linewidth=2, markersize=10)
+# Near/Far-field transition marker
+ax1.axvline(
+    z_transition, color='purple', linestyle='--',
+    linewidth=2, alpha=0.6, label='Near/Far transition'
+)
+if k_near:
+    z_fit_near = np.linspace(
+        near_df['z_mm'].min(),
+        near_df['z_mm'].max(),
+        50
+    )
+    SI_fit_near = exp_decay(z_fit_near, SI0_near, k_near, SIinf_near)
+    ax1.plot(z_fit_near, SI_fit_near, 'k--',
+             linewidth=2, label='Near-field fit')
+if k_far:
+    z_fit_far = np.linspace(
+        far_df['z_mm'].min(),
+        far_df['z_mm'].max(),
+        50
+    )
+    SI_fit_far = exp_decay(
+        z_fit_far - far_df['z_mm'].iloc[0],
+        SI0_far, k_far, SIinf_far
+    )
+    ax1.plot(z_fit_far, SI_fit_far, 'c--',
+             linewidth=2, label='Far-field fit')
+
 if fit_quality:
     z_fit = np.linspace(z.min(), z.max(), 100)
     SI_fit = exp_decay(z_fit, SI_0, k, SI_inf)
@@ -229,9 +330,13 @@ if L_mix:
             L_new = -np.log((SI_target - SI_inf) / (SI_0 - SI_inf)) / k_new
             print(f"   TI = {TI_new:.1f}% → L_mix ≈ {L_new:.0f} mm ({L_new/L_mix*100:.0f}% of baseline)")
 
-if fit_quality:
-    print(f"\n2. Mixing Time")
-    print(f"   τ_mix = 1/k = {1/k:.1f} mm (distance scale)")
+if k_far:
+    print(f"\n2. Far-field Mixing Length Scale")
+    print(f"   ℓ_mix,far = 1/k_far = {1/k_far:.1f} mm")
+elif fit_quality:
+    print(f"\n2. Global Mixing Length Scale (lumped)")
+    print(f"   ℓ_mix = 1/k = {1/k:.1f} mm")
+
 
 print(f"\n3. Turbulence Requirements")
 print(f"   Current inlet: TI = {TI_inlet:.2f}%, TKE = {TKE_inlet:.1f} m²/s²")
