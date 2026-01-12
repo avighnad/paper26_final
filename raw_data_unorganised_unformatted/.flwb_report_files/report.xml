@@ -1,0 +1,766 @@
+<FluentXMLReport>
+<version>
+Fluent
+Version: 3d, dp, pbns, pdf20, sstkw (3d, double precision, pressure-based, 20 species pdf, SST k-omega)
+Release: 25.2.0
+Title: 
+</version>
+
+<Models>
+
+Models
+------
+
+   Model                        Settings                                                                                                                           
+   -------------------------------------------------------------------------------------------------------------------------------------------------------------
+   Space                        3D                                                                                                                                 
+   Time                         Steady                                                                                                                             
+   Viscous                      SST k-omega turbulence model                                                                                                       
+   Heat Transfer                Enabled                                                                                                                            
+   Solidification and Melting   Disabled                                                                                                                           
+   Radiation                    P1 Model                                                                                                                           
+   Species                      Non-Premixed Combustion ((h2 n2 o2 h2o oh h o ho2 h2o2 hono o3 hno2 hno3 h2no hnoh no+ onhnho onhnoh hn&amp;lt;oh&amp;gt;2 no3) species)   
+   Coupled Dispersed Phase      Disabled                                                                                                                           
+   NOx Pollutants               Disabled                                                                                                                           
+   SOx Pollutants               Disabled                                                                                                                           
+   Soot                         Disabled                                                                                                                           
+   Mercury Pollutants           Disabled                                                                                                                           
+   Structure                    Disabled                                                                                                                           
+   Acoustics                    Disabled                                                                                                                           
+   Eulerian Wall Film           Disabled                                                                                                                           
+   Potential/Electrochemistry   Disabled                                                                                                                           
+   Multiphase                   Disabled                                                                                                                           
+
+</Models>
+
+<MaterialProperties>
+Material Properties
+-------------------
+
+   Material: pdf-mixture (mixture)
+
+      Property                    Units      Method       Value(s)                                                                                         
+      --------------------------------------------------------------------------------------------------------------------------------------------------
+      Mixture Species                        names        (h2 n2 o2 h2o oh h o ho2 h2o2 hono o3 hno2 hno3 h2no hnoh no+ onhnho onhnoh hn&amp;lt;oh&amp;gt;2 no3)   
+      Density                     kg/m^3     pdf          #f                                                                                               
+      Cp (Specific Heat)          J/(kg K)   mixing-law   #f                                                                                               
+      Thermal Conductivity        W/(m K)    constant     0.0454                                                                                           
+      Viscosity                   kg/(m s)   constant     1.72e-05                                                                                         
+      Absorption Coefficient      m^-1       constant     0                                                                                                
+      Scattering Coefficient      m^-1       constant     0                                                                                                
+      Scattering Phase Function              isotropic    #f                                                                                               
+      Refractive Index                       constant     1                                                                                                
+
+   Material: (no3 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                 
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                       
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 163.73876 2.5193502 -0.0018026513 1.7091613e-07 1.8157106e-10) (1000-5000: 954.789 0.43529904 -0.00019197048 3.7506746e-08 -2.6993175e-12)    
+      Molecular Weight          kg/kmol       constant               62.0049                                                                                                                                                  
+      Standard State Enthalpy   J/kgmol       constant               71144139                                                                                                                                                 
+      Standard State Entropy    J/(kgmol K)   constant               252571.08                                                                                                                                                
+      Reference Temperature     K             constant               298.15                                                                                                                                                   
+
+   Material: (hn&lt;oh&gt;2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 55.015558 4.8339904 -0.0046701562 2.2678014e-06 -4.3612536e-10) (1500-4000: 1689.6473 0.48580574 -6.4660156e-05 -1.262254e-08 2.7304698e-12)    
+      Molecular Weight          kg/kmol       constant               49.02941                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               -1.0309429e+08                                                                                                                                             
+      Standard State Entropy    J/(kgmol K)   constant               259836.67                                                                                                                                                  
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (onhnoh . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 141.18414 3.7661896 -0.0035352366 1.7033681e-06 -3.3223366e-10) (1500-4000: 1502.4587 0.35525591 -5.040901e-05 -8.5194975e-09 1.9654157e-12)    
+      Molecular Weight          kg/kmol       constant               62.02814                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               -7408117.2                                                                                                                                                 
+      Standard State Entropy    J/(kgmol K)   constant               271745.24                                                                                                                                                  
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (onhnho . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                    
+      ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                          
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 104.75694 3.4927877 -0.0030357018 1.4073561e-06 -2.6980917e-10) (1500-4000: 1347.8215 0.47256533 -5.1852887e-05 -1.7407621e-08 3.2150347e-12)    
+      Molecular Weight          kg/kmol       constant               62.02814                                                                                                                                                    
+      Standard State Enthalpy   J/kgmol       constant               98432168                                                                                                                                                    
+      Standard State Entropy    J/(kgmol K)   constant               261767.19                                                                                                                                                   
+      Reference Temperature     K             constant               298.15                                                                                                                                                      
+
+   Material: (no+ . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                  
+      ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                        
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 913.67147 0.39427246 -0.0011104328 1.5712685e-06 -6.780379e-10) (1000-5000: 807.6943 0.41545482 -0.00015871795 2.8201853e-08 -1.891266e-12)    
+      Molecular Weight          kg/kmol       constant               30.0061                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               9.9029003e+08                                                                                                                                             
+      Standard State Entropy    J/(kgmol K)   constant               198119.68                                                                                                                                                 
+      Reference Temperature     K             constant               298.15                                                                                                                                                    
+
+   Material: (hnoh . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 551.82406 2.768584 -0.0019740001 8.0014325e-07 -1.4868762e-10) (1500-4000: 1660.7462 0.47283719 -4.8577391e-05 -2.0368046e-08 3.7515446e-12)    
+      Molecular Weight          kg/kmol       constant               32.02204                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               88131532                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               233411.98                                                                                                                                                  
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (h2no . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 657.06347 2.231947 -0.0014205444 5.9102448e-07 -1.2068649e-10) (1500-4000: 1473.0754 0.59688916 -4.6073186e-05 -2.8651732e-08 4.8288429e-12)    
+      Molecular Weight          kg/kmol       constant               32.02204                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               66187644                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               233002.38                                                                                                                                                  
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (hno3 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                  
+      ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                        
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 178.55113 2.929295 -0.0026110173 1.1577066e-06 -2.1882183e-10) (1000-5000: 924.1488 0.76681952 -0.00030794052 5.6590385e-08 -3.9048729e-12)    
+      Molecular Weight          kg/kmol       constant               63.01287                                                                                                                                                  
+      Standard State Enthalpy   J/kgmol       constant               -1.3430955e+08                                                                                                                                            
+      Standard State Entropy    J/(kgmol K)   constant               266414.86                                                                                                                                                 
+      Reference Temperature     K             constant               298.15                                                                                                                                                    
+
+   Material: (hno2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                    
+      ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                          
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1500: 342.18187 1.786279 -0.00087800716 1.5388192e-07 -4.1103021e-13) (1500-4000: 1145.9417 0.35287016 -3.0779246e-05 -1.7147439e-08 3.0091164e-12)    
+      Molecular Weight          kg/kmol       constant               47.01347                                                                                                                                                    
+      Standard State Enthalpy   J/kgmol       constant               -59214230                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               237418.69                                                                                                                                                   
+      Reference Temperature     K             constant               298.15                                                                                                                                                      
+
+   Material: (o3 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 426.58446 1.6599741 -0.0012277054 2.3616903e-07 5.1441613e-11) (1000-5000: 940.50101 0.31533473 -0.00013348012 2.5971452e-08 -1.8631403e-12)    
+      Molecular Weight          kg/kmol       constant               47.9982                                                                                                                                                    
+      Standard State Enthalpy   J/kgmol       constant               1.4269207e+08                                                                                                                                              
+      Standard State Entropy    J/(kgmol K)   constant               238854.38                                                                                                                                                  
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (hono . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                    
+      ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                          
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 405.06637 2.4934897 -0.0024191219 1.3261816e-06 -3.3193625e-10) (1000-5000: 970.37322 0.74597721 -0.00029165579 5.2558514e-08 -3.5744606e-12)    
+      Molecular Weight          kg/kmol       constant               47.01347                                                                                                                                                    
+      Standard State Enthalpy   J/kgmol       constant               -76736842                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               249341.62                                                                                                                                                   
+      Reference Temperature     K             constant               298.15                                                                                                                                                      
+
+   Material: (h2o2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                
+      --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                      
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 828.33776 1.6057641 -3.629925e-05 -1.1307195e-06 6.041303e-10) (1000-5000: 1117.8528 1.0599135 -0.000360469 5.7415959e-08 -3.4994959e-12)    
+      Molecular Weight          kg/kmol       constant               34.01474                                                                                                                                                
+      Standard State Enthalpy   J/kgmol       constant               -1.3610865e+08                                                                                                                                          
+      Standard State Entropy    J/(kgmol K)   constant               232881.23                                                                                                                                               
+      Reference Temperature     K             constant               298.15                                                                                                                                                  
+
+   Material: (ho2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                   
+      -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                         
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 750.65874 1.2586781 -0.00095495985 5.9302575e-07 -2.0376416e-10) (1000-5000: 1025.7932 0.5368778 -0.00013371325 1.539693e-08 -7.1569499e-13)    
+      Molecular Weight          kg/kmol       constant               33.00677                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               10456014                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               228995.7                                                                                                                                                   
+      Reference Temperature     K             constant               298.15                                                                                                                                                     
+
+   Material: (o . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                      
+      --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                            
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 1531.1821 -0.85131257 0.0012581469 -8.3295591e-07 2.0218936e-10) (1000-5000: 1321.042 -0.014317336 -1.6124461e-06 2.3650713e-09 -2.2699626e-13)    
+      Molecular Weight          kg/kmol       constant               15.9994                                                                                                                                                       
+      Standard State Enthalpy   J/kgmol       constant               2.4919897e+08                                                                                                                                                 
+      Standard State Entropy    J/(kgmol K)   constant               160946.15                                                                                                                                                     
+      Reference Temperature     K             constant               298.15                                                                                                                                                        
+
+   Material: (h . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                        
+      ----------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                              
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 20621.825 0 0 0 0) (1000-5000: 20621.825 0 0 0 0)    
+      Molecular Weight          kg/kmol       constant               1.00797                                                         
+      Standard State Enthalpy   J/kgmol       constant               2.1798048e+08                                                   
+      Standard State Entropy    J/(kgmol K)   constant               114605.64                                                       
+      Reference Temperature     K             constant               298.15                                                          
+
+   Material: (oh . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                       
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                             
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 1778.1672 0.090486302 -0.00081943442 1.1670426e-06 -4.1219185e-10) (1000-5000: 1409.2937 0.49570636 -0.00011131075 1.0631474e-08 -2.5061207e-13)    
+      Molecular Weight          kg/kmol       constant               17.00737                                                                                                                                                       
+      Standard State Enthalpy   J/kgmol       constant               38986304                                                                                                                                                       
+      Standard State Entropy    J/(kgmol K)   constant               183605.54                                                                                                                                                      
+      Reference Temperature     K             constant               298.15                                                                                                                                                         
+
+   Material: (h2o . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                 
+      ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                       
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 1563.1015 1.60378 -0.0029328309 3.2161522e-06 -1.1568451e-09) (1000-5000: 1233.2532 1.4105459 -0.00040292055 5.5428604e-08 -2.9498712e-12)    
+      Molecular Weight          kg/kmol       constant               18.01534                                                                                                                                                 
+      Standard State Enthalpy   J/kgmol       constant               -2.4184661e+08                                                                                                                                           
+      Standard State Entropy    J/(kgmol K)   constant               188716.28                                                                                                                                                
+      Reference Temperature     K             constant               298.15                                                                                                                                                   
+
+   Material: (o2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                     
+      -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                           
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 834.83968 0.29296269 -0.00014956608 3.4139395e-07 -2.2783948e-10) (1000-5000: 960.76761 0.15941512 -3.2709374e-05 4.612837e-09 -2.9528797e-13)    
+      Molecular Weight          kg/kmol       constant               31.9988                                                                                                                                                      
+      Standard State Enthalpy   J/kgmol       constant               -847.65396                                                                                                                                                   
+      Standard State Entropy    J/(kgmol K)   constant               205044.88                                                                                                                                                    
+      Reference Temperature     K             constant               298.15                                                                                                                                                       
+
+   Material: (n2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                     
+      -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                           
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 979.05856 0.41797054 -0.0011762978 1.6744209e-06 -7.2564099e-10) (1000-5000: 868.63671 0.44163658 -0.00016872561 2.9968352e-08 -2.0044176e-12)    
+      Molecular Weight          kg/kmol       constant               28.0134                                                                                                                                                      
+      Standard State Enthalpy   J/kgmol       constant               1429.9037                                                                                                                                                    
+      Standard State Entropy    J/(kgmol K)   constant               191512.47                                                                                                                                                    
+      Reference Temperature     K             constant               298.15                                                                                                                                                       
+
+   Material: (h2 . pdf-mixture) (fluid)
+
+      Property                  Units         Method                 Value(s)                                                                                                                                                  
+      ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+      Density                   kg/m^3        pdf                    #f                                                                                                                                                        
+      Cp (Specific Heat)        J/(kg K)      piecewise-polynomial   (300-1000: 13602.667 3.4023706 -0.0033584766 -3.9080149e-07 1.7053722e-09) (1000-5000: 12337.72 2.8873211 -0.00023235963 -3.8074398e-08 6.5278466e-12)    
+      Molecular Weight          kg/kmol       constant               2.01594                                                                                                                                                   
+      Standard State Enthalpy   J/kgmol       constant               2448.6338                                                                                                                                                 
+      Standard State Entropy    J/(kgmol K)   constant               130595.67                                                                                                                                                 
+      Reference Temperature     K             constant               298.15                                                                                                                                                    
+
+   Material: aluminum (solid)
+
+      Property               Units      Method     Value(s)   
+      -----------------------------------------------------
+      Density                kg/m^3     constant   2719       
+      Cp (Specific Heat)     J/(kg K)   constant   871        
+      Thermal Conductivity   W/(m K)    constant   202.4      
+
+</MaterialProperties>
+
+<CellZoneConditions>
+Cell Zone Conditions
+--------------------
+
+   Zones
+
+      name    id   type    material      
+      --------------------------------
+      solid   3    fluid   pdf-mixture   
+
+   Setup Conditions
+
+      solid
+
+         Condition       Value         
+         ---------------------------
+         Material Name   pdf-mixture   
+         Frame Motion?   no            
+         Mesh Motion?    no            
+
+</CellZoneConditions>
+
+<BoundaryConditions>
+Boundary Conditions
+-------------------
+
+   Zones
+
+      name                                  id   type              
+      ----------------------------------------------------------
+      secondary_air                         9    mass-flow-inlet   
+      primary_air                           6    mass-flow-inlet   
+      fuel_injectors                        7    mass-flow-inlet   
+      wall-53                               53   wall              
+      wall-52                               52   wall              
+      wall-50                               50   wall              
+      wall-49                               49   wall              
+      wall-47                               47   wall              
+      wall-46                               46   wall              
+      wall-44                               44   wall              
+      wall-43                               43   wall              
+      wall-41                               41   wall              
+      wall-40                               40   wall              
+      wall-38                               38   wall              
+      wall-37                               37   wall              
+      wall-35                               35   wall              
+      wall-34                               34   wall              
+      wall-32                               32   wall              
+      wall-31                               31   wall              
+      wall-29                               29   wall              
+      wall-28                               28   wall              
+      wall-solid                            1    wall              
+      pressure_outlet                       8    pressure-outlet   
+      contact_region_10-src                 10   interface         
+      contact_region_10-trg                 11   interface         
+      contact_region_2-src                  12   interface         
+      contact_region_2-trg                  13   interface         
+      contact_region_3-src                  14   interface         
+      contact_region_3-trg                  15   interface         
+      contact_region_4-src                  16   interface         
+      contact_region_4-trg                  17   interface         
+      contact_region_5-src                  18   interface         
+      contact_region_5-trg                  19   interface         
+      contact_region_6-src                  20   interface         
+      contact_region_6-trg                  21   interface         
+      contact_region_7-src                  22   interface         
+      contact_region_7-trg                  23   interface         
+      contact_region_8-src                  24   interface         
+      contact_region_8-trg                  25   interface         
+      contact_region-contact_region_9-src   26   interface         
+      contact_region-contact_region_9-trg   27   interface         
+
+   Setup Conditions
+
+      secondary_air
+
+         Condition                 Value         
+         -------------------------------------
+         Mass Flow Rate [kg/s]     0.012621854   
+         Turbulent Intensity [%]   10            
+
+      primary_air
+
+         Condition                 Value        
+         ------------------------------------
+         Mass Flow Rate [kg/s]     0.15146225   
+         Turbulent Intensity [%]   10           
+
+      fuel_injectors
+
+         Condition               Value        
+         ----------------------------------
+         Mass Flow Rate [kg/s]   0.00083361   
+         Mean Mixture Fraction   1            
+
+      wall-53
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-52
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-50
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-49
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-47
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-46
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-44
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-43
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-41
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-40
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-38
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-37
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-35
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-34
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-32
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-31
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-29
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-28
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      wall-solid
+
+         Condition                  Value             
+         ------------------------------------------
+         Material Name              aluminum          
+         Thermal BC Type            Heat Flux         
+         Wall Motion                Stationary Wall   
+         Shear Boundary Condition   No Slip           
+         Wall Surface Roughness     Standard          
+
+      pressure_outlet
+
+         Condition   Value   
+         -----------------
+
+      contact_region_10-src
+
+         Condition   Value     
+         -------------------
+                     wall-28   
+
+      contact_region_10-trg
+
+         Condition   Value     
+         -------------------
+                     wall-29   
+
+      contact_region_2-src
+
+         Condition   Value     
+         -------------------
+                     wall-31   
+
+      contact_region_2-trg
+
+         Condition   Value     
+         -------------------
+                     wall-32   
+
+      contact_region_3-src
+
+         Condition   Value     
+         -------------------
+                     wall-34   
+
+      contact_region_3-trg
+
+         Condition   Value     
+         -------------------
+                     wall-35   
+
+      contact_region_4-src
+
+         Condition   Value     
+         -------------------
+                     wall-37   
+
+      contact_region_4-trg
+
+         Condition   Value     
+         -------------------
+                     wall-38   
+
+      contact_region_5-src
+
+         Condition   Value     
+         -------------------
+                     wall-40   
+
+      contact_region_5-trg
+
+         Condition   Value     
+         -------------------
+                     wall-41   
+
+      contact_region_6-src
+
+         Condition   Value     
+         -------------------
+                     wall-43   
+
+      contact_region_6-trg
+
+         Condition   Value     
+         -------------------
+                     wall-44   
+
+      contact_region_7-src
+
+         Condition   Value     
+         -------------------
+                     wall-46   
+
+      contact_region_7-trg
+
+         Condition   Value     
+         -------------------
+                     wall-47   
+
+      contact_region_8-src
+
+         Condition   Value     
+         -------------------
+                     wall-49   
+
+      contact_region_8-trg
+
+         Condition   Value     
+         -------------------
+                     wall-50   
+
+      contact_region-contact_region_9-src
+
+         Condition   Value     
+         -------------------
+                     wall-52   
+
+      contact_region-contact_region_9-trg
+
+         Condition   Value     
+         -------------------
+                     wall-53   
+
+</BoundaryConditions>
+
+<SolverSettings>
+Solver Settings
+---------------
+
+   Equations
+
+      Equation     Solved   
+      -------------------
+      Flow         yes      
+      Turbulence   yes      
+      Energy       yes      
+      P1           yes      
+      Pdf          yes      
+
+   Numerics
+
+      Numeric                         Enabled   
+      ---------------------------------------
+      Absolute Velocity Formulation   yes       
+
+   Pseudo Time Explicit Relaxation Factors
+
+      Variable                    Relaxation Factor   
+      ---------------------------------------------
+      Density                     0.25                
+      Body Forces                 1                   
+      Turbulent Kinetic Energy    0.75                
+      Specific Dissipation Rate   0.75                
+      Turbulent Viscosity         1                   
+      Energy                      0.75                
+      Temperature                 0.75                
+      P1                          1                   
+      Mean Mixture Fraction       0.75                
+      Mixture Fraction Variance   0.75                
+      Explicit Momentum           0.5                 
+      Explicit Pressure           0.5                 
+
+   Linear Solver
+
+      Variable                    Solver Type   Termination Criterion   Residual Reduction Tolerance   
+      ----------------------------------------------------------------------------------------------
+      Flow                        F-Cycle       0.1                                                    
+      Turbulent Kinetic Energy    F-Cycle       0.1                                                    
+      Specific Dissipation Rate   F-Cycle       0.1                                                    
+      Energy                      F-Cycle       0.1                                                    
+      P1                          F-Cycle       0.1                                                    
+      Mean Mixture Fraction       F-Cycle       0.1                                                    
+      Mixture Fraction Variance   F-Cycle       0.1                                                    
+
+   Pressure-Velocity Coupling
+
+      Parameter                               Value     
+      -----------------------------------------------
+      Type                                    Coupled   
+      Pseudo Time Method (Global Time Step)   yes       
+
+   Discretization Scheme
+
+      Variable                    Scheme                
+      -----------------------------------------------
+      Pressure                    Second Order          
+      Momentum                    Second Order Upwind   
+      Turbulent Kinetic Energy    Second Order Upwind   
+      Specific Dissipation Rate   Second Order Upwind   
+      Energy                      Second Order Upwind   
+      Mean Mixture Fraction       Second Order Upwind   
+      Mixture Fraction Variance   Second Order Upwind   
+
+   Solution Limits
+
+      Quantity                                 Limit    
+      -----------------------------------------------
+      Minimum Absolute Pressure [Pa]           1        
+      Maximum Absolute Pressure [Pa]           5e+10    
+      Minimum Static Temperature [K]           1        
+      Maximum Static Temperature [K]           5000     
+      Minimum Turb. Kinetic Energy [m^2/s^2]   1e-14    
+      Minimum Spec. Dissipation Rate [s^-1]    1e-20    
+      Maximum Turb. Viscosity Ratio            100000   
+
+</SolverSettings>
+
+</FluentXMLReport>
