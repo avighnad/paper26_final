@@ -4,8 +4,8 @@ import matplotlib.pyplot as plt
 import os
 
 # configuring the xcel file path and output folder 
-excel_file = 'case3_data.xlsx'
-output_folder = 'Case3_Results'
+excel_file = 'case4_data.xlsx'
+output_folder = 'Case4_Results'
 os.makedirs(output_folder, exist_ok=True)
 
 # axial positions, with the corresponding excel sheets (standardised)
